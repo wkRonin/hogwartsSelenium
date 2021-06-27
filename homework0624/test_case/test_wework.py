@@ -17,18 +17,19 @@ fake = Faker("zh_CN")
 @allure.feature("企业微信添加成员")
 class TestWework:
 
-    # def test_save_cookies(self, multiplex_driver):
-    #     # 手动登录并提取cookie
-    #     multiplex_driver.get("https://work.weixin.qq.com/wework_admin/frame")
-    #     multiplex_driver.find_element_by_id("menu_contacts").click()
-    #     my_cookies = multiplex_driver.get_cookies()
-    #
-    #     # 保存cookie到cookies.yaml文件
-    #     with open("cookies/data.yaml", "w", encoding="UTF-8") as f:
-    #         yaml.dump(my_cookies, f)
-    #
-    # def test_read_cookies(self, read_cookies):
-    #     logging.info(f'读取的cookie: {read_cookies}')
+    def test_save_cookies(self, multiplex_driver):
+        # 手动登录并提取cookie
+        multiplex_driver.get("https://work.weixin.qq.com/wework_admin/frame")
+        multiplex_driver.find_element_by_id("menu_contacts").click()
+        my_cookies = multiplex_driver.get_cookies()
+
+        # 保存cookie到cookies.yaml文件
+        with open("cookies/data.yaml", "w", encoding="UTF-8") as f:
+            yaml.dump(my_cookies, f)
+
+    def test_read_cookies(self, read_cookies):
+        logging.info(f'读取的cookie: {read_cookies}')
+
     @allure.story("通讯录测试")
     @allure.title("添加成员并保存成功")
     def test_add_members(self, chrome_driver, read_cookies):
@@ -114,12 +115,11 @@ class TestWework:
 
         # 根据手机号断言列表是否存在添加的成员(手机号有唯一性)
         with allure.step('断言成员是否在通讯录列表中'):
-            member_list = chrome_driver.find_element_by_id("member_list")
-            try:
-                assert 'phone' in member_list.text
-                logging.info(f'添加的成员：{username},手机号：{phone}...存在列表中')
-            except Exception as e:
-                logging.info(e)
+            member_phone_list = chrome_driver.find_elements_by_css_selector('.member_colRight_memberTable_td: nth - child(5)')
+            for x in member_phone_list:
+                if x.get_attribute('title') == phone:
+                    return True
+
 
 
 
