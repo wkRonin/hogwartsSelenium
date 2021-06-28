@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # @Time    : 2021/6/28 23:05
 # @Author  : wkRonin
-# @File    :contact_deptment_page.py
+# @File    :add_department_page.py
 from selenium.webdriver.common.by import By
 
 from homework0627.po.basepage import BasePage

@@ -14,7 +14,7 @@ class TestAddDepartment:
     def teardown(self):
         pass
 
-    @pytest.mark.parametrize("name", ["testdept5", "testdept6"])
+    @pytest.mark.parametrize("name", ["testdept7", "testdept8"])
     def test_add_department(self, name):
         result = self.main.goto_contact().click_add_dept().edit_department(name).get_dept_name()
         print(result)

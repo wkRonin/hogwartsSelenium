@@ -6,7 +6,7 @@ import time
 from selenium.webdriver.common.by import By
 from homework0627.po.add_member_page import AddMemberPage
 from homework0627.po.basepage import BasePage
-from homework0627.po.contact_deptment_page import AddDeptPage
+from homework0627.po.add_department_page import AddDeptPage
 
 
 class ContactPage(BasePage):
