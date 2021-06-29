@@ -2,7 +2,10 @@
 # @Time    : 2021/6/27 14:59
 # @Author  : wkRonin
 # @File    :contact_page.py
+import logging
 import time
+
+import allure
 from selenium.webdriver.common.by import By
 from homework0627.po.add_member_page import AddMemberPage
 from homework0627.po.basepage import BasePage
@@ -22,7 +25,9 @@ class ContactPage(BasePage):
         点击添加成员
         :return:返回添加成员页面
         """
-        self.wait_for_click(self._ADDMEMBER)
+        with allure.step("点击添加成员"):
+            self.wait_for_click(self._ADDMEMBER)
+            logging.info("点击添加成员")
         return AddMemberPage(self.driver)
 
     def get_member_name(self):
@@ -32,9 +37,11 @@ class ContactPage(BasePage):
         """
         time.sleep(1)
         name_list = []
-        eles = self.finds(*self._MEMBERNAMES)
-        for value in eles:
-            name_list.append(value.get_attribute("title"))
+        with allure.step('获取成员信息'):
+            eles = self.finds(*self._MEMBERNAMES)
+            for value in eles:
+                name_list.append(value.get_attribute("title"))
+            logging.info(f'获取成员信息: {name_list}')
         return name_list
 
     def click_add_dept(self):
@@ -42,10 +49,13 @@ class ContactPage(BasePage):
         点击+号下的添加部门
         :return:返回添加部门页面
         """
-        # 点击➕
-        self.wait_for_click(self._ADD)
-        # 点击添加部门
-        self.find_and_click(*self._ADDDEPT)
+        with allure.step('点击+号下的添加部门'):
+            # 点击➕
+            self.wait_for_click(self._ADD)
+            logging.info('点击➕')
+            # 点击添加部门
+            self.find_and_click(*self._ADDDEPT)
+            logging.info('点击添加部门')
         return AddDeptPage(self.driver)
 
     def get_dept_name(self):
@@ -55,9 +65,11 @@ class ContactPage(BasePage):
         """
         time.sleep(1)
         name_list = []
-        eles = self.finds(*self._DEPTNAMES)
-        for value in eles:
-            name_list.append(value.text)
+        with allure.step('获取部门信息'):
+            eles = self.finds(*self._DEPTNAMES)
+            for value in eles:
+                name_list.append(value.text)
+            logging.info(f'获取部门信息: {name_list}')
         return name_list
 
 

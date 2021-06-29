@@ -2,10 +2,12 @@
 # @Time    : 2021/6/28 23:05
 # @Author  : wkRonin
 # @File    :add_department_page.py
+import logging
+
+import allure
 from selenium.webdriver.common.by import By
 
 from homework0627.po.basepage import BasePage
-
 
 
 class AddDeptPage(BasePage):
@@ -21,12 +23,16 @@ class AddDeptPage(BasePage):
         :return:返回通讯录页面
         """
         from homework0627.po.contact_page import ContactPage
-        # 输入部门名称
-        self.find(*self._DEPTNAME).send_keys(dept_name)
-        # 点击所属部门
-        self.find_and_click(*self._TODEPT)
-        # 点击根部门
-        self.finds(*self._ROOTDEPT)[1].click()
-        # 点击确定
-        self.find_and_click(*self._SUBMITDEPT)
+        with allure.step('添加部门信息'):
+            logging.info('开始录入部门信息...')
+            # 输入部门名称
+            self.find(*self._DEPTNAME).send_keys(dept_name)
+            # 点击所属部门
+            self.find_and_click(*self._TODEPT)
+            # 点击根部门
+            self.finds(*self._ROOTDEPT)[1].click()
+            logging.info(f'录入完成：部门名称：{dept_name}')
+            # 点击确定
+            self.find_and_click(*self._SUBMITDEPT)
+            logging.info('添加部门保存成功')
         return ContactPage(self.driver)

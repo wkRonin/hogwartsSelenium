@@ -2,6 +2,9 @@
 # @Time    : 2021/6/27 16:06
 # @Author  : wkRonin
 # @File    :basepage.py
+import logging
+
+import allure
 from selenium import webdriver
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
@@ -19,7 +22,7 @@ class BasePage:
             self.driver = webdriver.Chrome(options=opt)
             self.driver.implicitly_wait(10)
             self.driver.get("https://work.weixin.qq.com/wework_admin/frame")
-            print("实例化driver")
+            logging.info("实例化driver")
         else:
             self.driver = driver_base
 
@@ -40,4 +43,15 @@ class BasePage:
             expected_conditions.element_to_be_clickable(locator))
         element.click()
         return element
+
+    def save_screenshot(self, path, stepname):
+        """
+        allure报告截图步骤
+        :param path: 截图保存的路径
+        :param stepname: 步骤名称
+        :return:
+        """
+        with allure.step(stepname):
+            self.driver.save_screenshot(path)
+            allure.attach.file(path, stepname)
 
